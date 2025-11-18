@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务数据分析AI智能体V2.0 - 方法论展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .team {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section-content {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .highlight-box h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .evolution-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-item .date {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item .title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .process-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .process-step .step-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .process-step .step-name {
+            font-size: 1.1em;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #667eea;
+        }
+
+        .comparison-card h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .comparison-card li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .comparison-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .key-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .method-steps {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .method-step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .method-step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>财务数据分析AI智能体V2.0</h1>
+            <div class="subtitle">应付案例方法论展示</div>
+            <div class="team">
+                共创团队：财务侧 (Yuyang Bai, Rui Lin, Amos Huang) | ATIT侧 (Emily Yan)
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Why部分 -->
+            <div class="section">
+                <h2 class="section-title">🎯 为什么做这个 AI 工具？</h2>
+                <div class="highlight-box">
+                    <h3>让数据"会说话"，从简单查询迈向智能洞察</h3>
+                    <p style="margin: 15px 0;">在应付侧运营分析中，我们面临着"数据太散、分析太慢"的困境：</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="padding: 10px 0;">📊 数据分散在多个系统，需要人工反复采集整理</li>
+                        <li style="padding: 10px 0;">⏱️ 出一份报告需要2人、8小时，全年近200个小时</li>
+                        <li style="padding: 10px 0;">🔍 分析维度有限，趋势洞察、异常识别几乎无法实现</li>
+                        <li style="padding: 10px 0;">❌ 流程繁琐、易出错，严重依赖人工透视表</li>
+                    </ul>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">小时/年投入</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2人</div>
+                        <div class="stat-label">每次分析</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8小时</div>
+                        <div class="stat-label">单次耗时</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 智能体演进历程 -->
+            <div class="section">
+                <h2 class="section-title">🚀 智能体演进历程</h2>
+                <div class="evolution-timeline">
+                    <div class="timeline-item">
+                        <div class="date">2025.07.30</div>
+                        <div class="title">阶段一：基础分析奠基</div>
+                        <p><strong>定位：</strong>具备基础数据分析能力，支持结构化分析与组合下钻，能自动生成标准报告</p>
+                        <p><strong>局限：</strong>仅具分析功能、无法查询；场景单一、技术门槛高；上线周期长（约15天）</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">2025.08.30</div>
+                        <div class="title">阶段二：效率与功能突破</div>
+                        <p><strong>定位：</strong>实现"分析 + 查询"一体化，支持多场景分析；免前置配置，4小时快速部署</p>
+                        <p><strong>优势：</strong>具备自我优化能力，报告准确率提升100%</p>
+                        <p><strong>局限：</strong>分析仍停留在描述层面，难以自动挖掘问题根因</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="date">2025.09.30</div>
+                        <div class="title">阶段三：深度洞察升级</div>
+                        <p><strong>定位：</strong>具备深度归因分析能力，整合趋势、指标、维度算法</p>
+                        <p><strong>突破：</strong>实现从"描述现象"到"解析原因"的跨越</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10步骤分析流程 -->
+            <div class="section">
+                <h2 class="section-title">🔄 智能体10步骤分析流程</h2>
+                <p class="section-content" style="margin-bottom: 30px;">
+                    从接收用户问题到生成、归档分析报告的端到端数据分析闭环
+                </p>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-name">需求理解</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-name">案例复用</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-name">问题拆解</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-name">SQL生成</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <div class="step-name">数据查询</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">6</div>
+                        <div class="step-name">趋势分析</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">7</div>
+                        <div class="step-name">指标分析</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">8</div>
+                        <div class="step-name">维度分析</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">9</div>
+                        <div class="step-name">报告生成</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">10</div>
+                        <div class="step-name">归档登记</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心功能模块 -->
+            <div class="section">
+                <h2 class="section-title">💡 核心功能模块</h2>
+                <div class="key-features">
+                    <div class="feature-card">
+                        <h4>📝 需求理解</h4>
+                        <p>自动语义解析，将自然语言转化为可分析的问题</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔄 案例复用</h4>
+                        <p>经验学习机制，匹配并借鉴高评分历史报告</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎯 问题拆解</h4>
+                        <p>结构化任务生成，自动识别表、指标、维度、时间</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 数据分析</h4>
+                        <p>算法链执行：趋势 → 指标 → 维度 → 根因核查</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📄 报告生成</h4>
+                        <p>自动写作引擎，自定义模板、计算精准、图文结合</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 洞察扩展</h4>
+                        <p>外部信息整合，提升报告深度与决策价值</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快速分析 vs 深度研究 -->
+            <div class="section">
+                <h2 class="section-title">📋 两种分析模式</h2>
+                <div class="comparison-table">
+                    <div class="comparison-card">
+                        <h3>⚡ 快速分析版</h3>
+                        <ul>
+                            <li>侧重描述性分析</li>
+                            <li>呈现数据原始面貌与关键指标</li>
+                            <li>口径统一、数据准确</li>
+                            <li>分析发散性小</li>
+                            <li>适用于日常监控与短会汇报</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h3>🔬 深度研究版</h3>
+                        <ul>
+                            <li>融入多步分析</li>
+                            <li>层层下探异常数据根本原因</li>
+                            <li>覆盖描述性、相关性、归因分析</li>
+                            <li>内容更全面深入</li>
+                            <li>适合需要深度洞察的场景</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快速应用方法 -->
+            <div class="section">
+                <h2 class="section-title">🎯 快速应用方法指引</h2>
+                <div class="method-steps">
+                    <div class="method-step">
+                        <h4>Step 1: 业务场景输入</h4>
+                        <p>梳理业务场景与逻辑，提供典型问题与表达方式，搭建分析流程路径</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Step 2: 指标体系搭建</h4>
+                        <p>明确数据来源，制定清洗与转换规则，构建标准化指标库</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Step 3: 模板策略中转</h4>
+                        <p>场景模板匹配，支持多层交互，实现差异化输出</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心成果 -->
+            <div class="section">
+                <h2 class="section-title">🏆 核心成果</h2>
+                <div class="highlight-box">
+                    <h3>从15天到半天：智能体构建效率提升30倍</h3>
+                    <p style="margin: 15px 0;">经过多轮实践，我们沉淀出一套可复制的智能体构建方法论：</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="padding: 10px 0;">✅ 分析逻辑、指标体系与模板策略均已标准化</li>
+                        <li style="padding: 10px 0;">✅ 智能体上线从定制开发转变为流程化配置</li>
+                        <li style="padding: 10px 0;">✅ 最快仅需半天即可落地一个可用的智能分析智能体</li>
+                        <li style="padding: 10px 0;">✅ 报告准确率提升100%，分析效率显著提高</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 按钮区域 -->
+            <div class="button-container">
+                <a href="https://anker-in.feishu.cn/wiki/I4FAweRcciyQRBkJso2cOAygnie"
+                   target="_blank"
+                   class="cta-button">
+                    📄 查看完整方法论文档
+                </a>
+                <a href="https://ai.anker-in.com/applications/app-detail/cea40d7c-f84f-4160-8b0c-9f16e78652d0"
+                   target="_blank"
+                   class="cta-button secondary">
+                    🤖 体验AI智能体
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 财务数据分析AI智能体V2.0 | 共创团队出品</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">让数据"会说话"，让分析更智能</p>
+        </div>
+    </div>
+
+    <script>
+        // 添加页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
